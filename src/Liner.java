@@ -1,15 +1,12 @@
 public class Liner extends Series {
 
-    Liner(double a1, double d) {
-        this.d = d;
-        this.a1 = a1;
+    Liner(double firstElement, double difference, double n) {
+        super(firstElement, difference, n);
     }
 
     @Override
     public double getJElement(int j) {
-        return a1 + d * (j - 1);
+        return firstElement + step * (j - 1);
     }
-
-    private double d;
-    private double a1;
 }
+

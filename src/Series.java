@@ -3,11 +3,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public abstract class Series {
+
+    Series(double firstElement, double step, double n) {
+        this.firstElement = firstElement;
+        this.step = step;
+        this.n = n;
+    }
+
     public abstract double getJElement(int j);
 
-    public double sum(int n) {
+    public double sum() {
         double sum = 0;
-        for (int i = 1; i < n + 1; ++i)
+        for (int i = 1; i <= n; ++i)
             sum += getJElement(i);
         return sum;
     }
@@ -15,9 +22,9 @@ public abstract class Series {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        for (int i = 1; i < 10; ++i)
+        for (int i = 1; i <= n; ++i)
             res.append(getJElement(i) + " ");
-        return "[ " + res.toString() + "... ]";
+        return "[ " + res.toString() + "]";
     }
 
     public void writeToFile(String fileName, boolean append) {
@@ -27,4 +34,8 @@ public abstract class Series {
             System.err.println("file does not exist");
         }
     }
+
+    protected double firstElement;
+    protected double n;
+    protected double step;
 }
