@@ -1,9 +1,10 @@
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public abstract class Series {
 
-    Series(double firstElement, double step, int n) {
+        Series(double firstElement, double step, int n) {
         this.firstElement = firstElement;
         this.step = step;
         this.n = n;
@@ -23,13 +24,13 @@ public abstract class Series {
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        for (int i = 1; i <= n; ++i)
-            res.append(getJElement(i) + " ");
-        return "[ " + res.toString() + "]";
+        for (int i = 1; i <= n - 1; ++i)
+            res.append(getJElement(i) + ", ");
+        return  res.toString() + getJElement(n);
     }
 
-    public void writeToFile(String fileName, boolean append) throws IOException {
-        try (FileWriter out = new FileWriter(fileName, append)) {
+    public void writeToFile(File file, boolean append) throws IOException {
+        try (FileWriter out = new FileWriter(file, append)) {
             out.write(toString() + '\n');
         } catch (IOException e) {
             System.err.println("file does not exist");
