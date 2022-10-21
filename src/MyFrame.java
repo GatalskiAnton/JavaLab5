@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.jar.JarEntry;
 import javax.swing.JFileChooser;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 public class MyFrame extends JFrame {
     public MyFrame(String title) throws HeadlessException {
         super(title);
@@ -104,6 +107,9 @@ public class MyFrame extends JFrame {
         calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                if(firstElementField.getText().equals("") || nField.getText().equals("") || stepField.getText().equals(""))
+                    return;
                 series.setFirstElement(Double.parseDouble(firstElementField.getText()));
                 series.setStep(Double.parseDouble(stepField.getText()));
                 series.setN(Integer.parseInt(nField.getText()));
@@ -119,10 +125,78 @@ public class MyFrame extends JFrame {
     private void createTextField() {
         firstElementField = new JTextField();
         firstElementField.setColumns(10);
+        firstElementField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+        });
+
         stepField = new JTextField();
         stepField.setColumns(10);
+        stepField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+        });
         nField = new JTextField();
         nField.setColumns(10);
+        nField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                textArea.setText(null);
+                lastElementLabel.setText("Last element - ?");
+                sumLabel.setText("Sum - ?");
+            }
+        });
+
     }
 
     private void createFrame()
@@ -156,6 +230,9 @@ public class MyFrame extends JFrame {
                 file.setFileHidingEnabled(false);
                 file.showOpenDialog(null);
                 File f = file.getSelectedFile();
+                if (f == null)
+                    return;
+
                 try {
                     series.writeToFile(f, false);
                 }catch (IOException err)
@@ -179,7 +256,10 @@ public class MyFrame extends JFrame {
 
     private void clearFrame()
     {
-        series = null;
+        if (linerButton.isEnabled())
+            series = new Liner();
+        else
+            series = new Exponential();
         textArea.setText(null);
         firstElementField.setText(null);
         stepField.setText(null);
